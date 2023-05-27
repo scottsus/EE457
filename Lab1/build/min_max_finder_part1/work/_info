@@ -7,7 +7,7 @@ z2
 !i10e 25
 !i10f 100
 cModel Technology
-dC:/Questasim_projects
+dC:/Questasim_projects/Lab1/build/min_max_finder_part3_M1
 vmin_max_finder_part1
 Z0 VDg1SIo80bB@j0V0VzS_@n1
 r1
@@ -16,13 +16,13 @@ r1
 !i10b 1
 !s100 Clf2KdVC80J;BX_EIfO@Y3
 IdzQ>:ZAIEi3`E<b8IDNQM3
-Z1 dC:/Questasim_projects/Lab1/min_max_finder_part1_build
-w1685220550
+Z1 dC:/Questasim_projects/Lab1/build/min_max_finder_part1
+w1685227260
 8min_max_finder_part1.v
 Fmin_max_finder_part1.v
 L0 11
 Z2 OL;L;10.4c;61
-Z3 !s108 1685226092.000000
+Z3 !s108 1685227266.000000
 !s107 min_max_finder_part1.v|
 !s90 -reportprogress|300|+acc|min_max_finder_part1.v|
 !i113 0
