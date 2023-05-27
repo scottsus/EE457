@@ -1,0 +1,95 @@
+# Reading C:/questasim64_10.4c/tcl/vsim/pref.tcl
+# //  Questa Sim-64
+# //  Version 10.4c win64 Jul 20 2015
+# //
+# //  Copyright 1991-2015 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //  THIS DOCUMENT CONTAINS TRADE SECRETS AND COMMERCIAL OR FINANCIAL
+# //  INFORMATION THAT ARE PRIVILEGED, CONFIDENTIAL, AND EXEMPT FROM
+# //  DISCLOSURE UNDER THE FREEDOM OF INFORMATION ACT, 5 U.S.C. SECTION 552.
+# //  FURTHERMORE, THIS INFORMATION IS PROHIBITED FROM DISCLOSURE UNDER
+# //  THE TRADE SECRETS ACT, 18 U.S.C. SECTION 1905.
+# //
+# Project file C:/Questasim_projects/Lab_test.mpf was not found.
+# Unable to open project.
+file mkdir C:/Questasim_projects/Lab1/min_max_finder_part1_build
+# Loading project min_max_finder_part1
+ls
+# min_max_finder_part1.do
+# min_max_finder_part1.mpf
+# min_max_finder_part1.v
+# min_max_finder_part1_tb.v
+# min_max_finder_part1_wave.do
+# output_results_part1.txt
+# work
+do min_max_finder_part1.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# QuestaSim-64 vlog 10.4c Compiler 2015.07 Jul 20 2015
+# Start time: 15:21:32 on May 27,2023
+# vlog -reportprogress 300 "+acc" min_max_finder_part1.v 
+# -- Compiling module min_max_finder_part1
+# 
+# Top level modules:
+# 	min_max_finder_part1
+# End time: 15:21:32 on May 27,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# QuestaSim-64 vlog 10.4c Compiler 2015.07 Jul 20 2015
+# Start time: 15:21:32 on May 27,2023
+# vlog -reportprogress 300 "+acc" min_max_finder_part1_tb.v 
+# -- Compiling module min_max_finder_part1_tb
+# 
+# Top level modules:
+# 	min_max_finder_part1_tb
+# End time: 15:21:32 on May 27,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -novopt -t 1ps -lib work min_max_finder_part1_tb 
+# Start time: 15:21:32 on May 27,2023
+# ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
+# 
+# Refreshing C:/Questasim_projects/Lab1/min_max_finder_part1_build/work.min_max_finder_part1_tb
+# Loading work.min_max_finder_part1_tb
+# Refreshing C:/Questasim_projects/Lab1/min_max_finder_part1_build/work.min_max_finder_part1
+# Loading work.min_max_finder_part1
+# .main_pane.wave.interior.cs.body.pw.wf
+# .main_pane.structure.interior.cs.body.struct
+# .main_pane.objects.interior.cs.body.tree
+# Test number   1: Max: 245 decimal = f5 hex   and   Min:   2 decimal = 02 hex
+#     Design entered DONE state from  COMP .
+#            Clocks taken for this test = 16. 
+# 
+# Test number   2: Max: 185 decimal = b9 hex   and   Min:   1 decimal = 01 hex
+#     Design entered DONE state from  COMP .
+#            Clocks taken for this test = 16. 
+# 
+# Test number   3: Max: 222 decimal = de hex   and   Min:  30 decimal = 1e hex
+#     Design entered DONE state from  COMP .
+#            Clocks taken for this test = 16. 
+# 
+# Test number   4: Max: 255 decimal = ff hex   and   Min:   0 decimal = 00 hex
+#     Design entered DONE state from  COMP .
+#            Clocks taken for this test = 16. 
+# 
+# Test number   5: Max: 130 decimal = 82 hex   and   Min: 115 decimal = 73 hex
+#     Design entered DONE state from  COMP .
+#            Clocks taken for this test = 16. 
+# 
+# Test number   6: Max: 130 decimal = 82 hex   and   Min: 115 decimal = 73 hex
+#     Design entered DONE state from  COMP .
+#            Clocks taken for this test = 16. 
+# 
+# Test number   7: Max: 130 decimal = 82 hex   and   Min: 117 decimal = 75 hex
+#     Design entered DONE state from  COMP .
+#            Clocks taken for this test = 16. 
+# 
+# Test number   8: Max: 129 decimal = 81 hex   and   Min:  35 decimal = 23 hex
+#     Design entered DONE state from  COMP .
+#            Clocks taken for this test = 16. 
+# 
+# 
+#  All tests concluded. Inspect the text file output_results_part1.txt. 
+#  Current Clock Count = 146 
