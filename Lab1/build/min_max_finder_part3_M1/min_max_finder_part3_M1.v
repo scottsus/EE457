@@ -67,62 +67,57 @@ always @(posedge Clk, posedge Reset)
 	        CMx :
 	          begin 
 			   // RTL operations in the Data Path   		                  
-
-
-
-
-
+					if (M[I] >= Max)
+					begin
+						Max <= M[I];
+						I <= I + 1;
+					end
 			   // state transitions in the control unit    
-
-
-
-
-
+					if (M[I] >= Max && I == 15)
+						state <= DONE;
+					if (M[I] < Max)
+						state <= CMnF;
 			   end
 			  
 	        CMnF :
 	          begin // 
 				// RTL operations in the Data Path 
-
-
-				
-
+					if (M[I] < Min)
+						Min <= M[I];
+					I <= I + 1;
 				// state transitions in the control unit 
-
-
-
-
-
-
+					if (I == 15)
+						state <= DONE;
+					else
+						state <= CMn;
 			  end
 
 	        CMn :
 	          begin 
  			   // RTL operations in the Data Path   		                  
-
-
-
-
+					if (M[I] <= Min)
+					begin
+						Min <= M[I];
+						I <= I + 1;
+					end
 			   // state transitions in the control unit    
-
-
-
-
-
-
+					if (M[I] <= Min && I == 15)
+						state <= DONE;
+					if (M[I] > Min)
+						state <= CMxF;
 			  end
 
 	        CMxF :
 	          begin // 
 				// RTL operations in the Data Path 
-
-
-
+					if (M[I] > Max)
+						Max <= M[I];
+					I <= I + 1;
 				// state transitions in the control unit 
-
-
-
-
+					if (I == 15)
+						state <= DONE;
+					else
+						state <= CMx;
 			  end
 
 	        DONE	:
