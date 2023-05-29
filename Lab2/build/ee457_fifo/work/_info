@@ -1,0 +1,48 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Questasim_projects/Lab2/build/ee457_fifo
+vee457_fifo
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+31
+!i10b 1
+!s100 ^BMhYAg^Q@KQHKNU_GbE=0
+If]gZzlFicZa4XBkQONR?>2
+R0
+Z2 w1685249932
+8ee457_fifo.v
+Fee457_fifo.v
+L0 2
+Z3 OL;L;10.4c;61
+Z4 !s108 1685337074.000000
+!s107 ee457_fifo.v|
+!s90 -reportprogress|300|+acc|ee457_fifo.v|
+!i113 0
+Z5 o+acc -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+vfifo_tb
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 XBOUiU`Ldh`alMJ5LYl^@0
+IgIL5a`Aa>Q0ko1B;Z?03T1
+R0
+R2
+8ee457_fifo_tb.v
+Fee457_fifo_tb.v
+L0 3
+R3
+R4
+!s107 ee457_fifo_tb.v|
+!s90 -reportprogress|300|+acc|ee457_fifo_tb.v|
+!i113 0
+R5
