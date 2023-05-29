@@ -43,7 +43,7 @@ module ee457_fifo(clk, rst, din, wen, full, dout, ren, empty);
     assign empty = (wptr == rptr) && (counter == 0);
 
     assign should_read = ren && !empty;
-    assign should_write = wen && !full;
+    assign should_write = (wen && !full) || (wen && full && ren);
     
     always @(posedge clk)
     begin
