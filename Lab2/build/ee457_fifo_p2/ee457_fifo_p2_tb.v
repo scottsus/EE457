@@ -24,10 +24,17 @@ module fifo_tb;
     # 15;
     rst = 0;
     # 7;
-    for (i = 0; i < DEPTH + 2; i = i + 1)
+    for (i = 0; i < DEPTH; i = i + 1)
     begin
       din = din + 1;
       wen = 1;
+      # 10;
+    end
+    for (i = 0; i < 2; i = i + 1)
+    begin
+      din = din + 1;
+      wen = 1;
+      ren = 1;
       # 10;
     end
     din = din + 1;

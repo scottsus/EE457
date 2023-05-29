@@ -25,7 +25,7 @@ module ee457_fifo(clk, rst, din, wen, full, dout, ren, empty);
   output              full;
   output              empty;
   
-  reg [DEPTH-1:0]     mem_array[0:WIDTH-1];
+  reg [WIDTH-1:0]     mem_array[0:DEPTH-1];
 
   reg [ADDR_SIZE-1:0] rptr;
   reg [ADDR_SIZE-1:0] wptr;
@@ -39,8 +39,8 @@ module ee457_fifo(clk, rst, din, wen, full, dout, ren, empty);
     assign dout = mem_array[rptr];
 
     // Write your code here    
-    assign full = (wptr == rptr) && (counter == DEPTH - 1);
-    assign empty = (wptr == rptr) && (counter == 0);
+    assign full = counter == DEPTH;
+    assign empty = counter == 0;
 
     assign should_read = ren && !empty;
     assign should_write = (wen && !full) || (wen && full && ren);
@@ -60,11 +60,17 @@ module ee457_fifo(clk, rst, din, wen, full, dout, ren, empty);
         begin
           mem_array[wptr] <= din;
           wptr <= wptr + 1;
+          if (wptr == DEPTH - 1)
+            wptr <= 0;
+          $display("Wrote %d to %d", din, wptr);
         end
 
         if (should_read)
         begin
           rptr <= rptr + 1;
+          if (rptr == DEPTH - 1)
+            rptr <= 0;
+          $display("Read %d from %d", mem_array[rptr], rptr);
         end
 
         if (should_read && should_write)
@@ -74,7 +80,18 @@ module ee457_fifo(clk, rst, din, wen, full, dout, ren, empty);
         else if (!should_read && should_write)
           counter <= counter + 1;
 
+        // $display("rptr: %d", rptr);
+        // $display("wptr: %d", wptr);
+        // $display("counter: %d", counter);
+
       end
+
+      // $display("Final: %d", mem_array[0]);
+      // $display("Final: %d", mem_array[1]);
+      // $display("Final: %d", mem_array[2]);
+      // $display("Final: %d", mem_array[3]);
+      // $display("Final: %d", mem_array[4]);
+      // $display("Final: %d", mem_array[5]);
     end
 
   end

@@ -8,3 +8,41 @@ z2
 !i10f 100
 cModel Technology
 dC:/Questasim_projects/Lab2/build/ee457_fifo
+vee457_fifo
+Z0 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+31
+!i10b 1
+!s100 beL_OgJIC;Dh4i<lNLXiL1
+IDUFkk4ORAn[EzdjX7L[IW2
+Z1 dC:/Questasim_projects/Lab2/build/ee457_fifo_p2
+w1685345905
+8ee457_fifo_p2.v
+Fee457_fifo_p2.v
+L0 2
+Z2 OL;L;10.4c;61
+Z3 !s108 1685345907.000000
+!s107 ee457_fifo_p2.v|
+!s90 -reportprogress|300|+acc|ee457_fifo_p2.v|
+!i113 0
+Z4 o+acc -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+vfifo_tb
+R0
+r1
+!s85 0
+31
+!i10b 1
+!s100 ?K^4989e^P5E9`Qgma<k31
+Iz`KKI05o:foo>V`K>;TUN1
+R1
+w1685342663
+8ee457_fifo_p2_tb.v
+Fee457_fifo_p2_tb.v
+L0 3
+R2
+R3
+!s107 ee457_fifo_p2_tb.v|
+!s90 -reportprogress|300|+acc|ee457_fifo_p2_tb.v|
+!i113 0
+R4
