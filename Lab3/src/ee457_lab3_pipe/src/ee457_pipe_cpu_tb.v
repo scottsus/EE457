@@ -1,0 +1,510 @@
+`timescale 1ns / 1ps
+
+////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer:
+//
+// Create Date:   15:00:26 04/06/2010
+// Design Name:   ee457_scpu_tb
+// Project Name:  ee457_scpu
+// Target Device:  
+// Tool versions:  
+// Description: 
+//
+// Verilog Testbench for module: ee457_smcpu
+//
+// Dependencies:
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+////////////////////////////////////////////////////////////////////////////////
+
+module ee457_pipe_cpu_tb;
+
+	// UUT Inputs
+	wire [31:0] dmem_wdata;
+	wire [31:0] dmem_rdata;
+	wire [31:0] dmem_addr;
+	wire        dmemread;
+	wire        dmemwrite;
+  
+	wire [31:0] imem_wdata;
+	wire [31:0] imem_rdata;
+	wire [31:0] imem_addr;
+	wire        imemread;
+	wire        imemwrite;
+	
+	reg clk;
+	reg rst;
+
+	// UUT Outputs
+	wire [4:0] reg_ra;
+	wire [4:0] reg_rb;
+	wire [4:0] reg_wa;
+	wire [31:0] reg_radata;
+	wire [31:0] reg_rbdata;
+	wire [31:0] reg_wdata;
+	wire regwrite;
+
+	reg [5*8:0] if_opname;
+	// Golden Model Signals
+//	wire [31:0] mem_rdata_g;
+//	wire [31:0] mem_addr_g;
+//	wire [31:0] mem_wdata_g;
+//	wire memread_g;
+//	wire memwrite_g;
+//	wire [4:0] reg_ra_g;
+//	wire [4:0] reg_rb_g;
+//	wire [4:0] reg_wa_g;
+//	wire [31:0] reg_radata_g;
+//	wire [31:0] reg_rbdata_g;
+//	wire [31:0] reg_wdata_g;
+//	wire regwrite_g;
+//
+//	reg  lw_flag;
+	
+    // Use these for opcode decoding as necessary
+    localparam OP_LW    = 6'b100011;
+    localparam OP_SW    = 6'b101011;
+    localparam OP_RTYPE = 6'b000000;
+    localparam OP_BEQ   = 6'b000100;
+    localparam OP_BNE   = 6'b000101;
+    localparam OP_JMP   = 6'b000010;
+    localparam OP_ADDI  = 6'b001000;
+    localparam OP_JAL   = 6'b000011;
+    localparam FUNC_ADD = 6'b100000;
+    localparam FUNC_SUB = 6'b100010;
+    localparam FUNC_AND = 6'b100100;
+    localparam FUNC_OR  = 6'b100101;
+    localparam FUNC_XOR = 6'b100110;
+    localparam FUNC_NOR = 6'b100111;
+    localparam FUNC_SLT = 6'b101010;
+    localparam FUNC_SLL = 6'b000000;
+    localparam FUNC_SRL = 6'b000010;
+    localparam FUNC_SRA = 6'b000011;
+    localparam FUNC_JR  = 6'b001000;
+
+	// Instantiate the Unit Under Test (UUT)
+	ee457_pipe_cpu uut (
+		.imem_addr(imem_addr), 
+		.imem_rdata(imem_rdata), 
+		.imem_wdata(imem_wdata), 
+		.imemread(imemread), 
+		.imemwrite(imemwrite), 
+		.dmem_addr(dmem_addr), 
+		.dmem_rdata(dmem_rdata), 
+		.dmem_wdata(dmem_wdata), 
+		.dmemread(dmemread), 
+		.dmemwrite(dmemwrite), 
+		.reg_ra(reg_ra), 
+		.reg_rb(reg_rb), 
+		.reg_wa(reg_wa), 
+		.reg_radata(reg_radata), 
+		.reg_rbdata(reg_rbdata), 
+		.reg_wdata(reg_wdata), 
+		.regwrite(regwrite), 
+		.clk(clk), 
+		.rst(rst)
+	);
+
+	always@(imem_rdata)
+	begin
+		case(imem_rdata[31:26])
+    		OP_LW:
+				if_opname = "LW";
+			OP_SW:
+				if_opname = "SW";
+			OP_BEQ:
+				if_opname = "BEQ";
+			OP_BNE:
+				if_opname = "BNE";
+			OP_JMP:
+				if_opname = "JMP";
+			OP_ADDI:
+				if_opname = "ADDI";
+			OP_JAL:
+				if_opname = "JAL";
+			OP_RTYPE:
+			begin
+				case(imem_rdata[5:0])
+					FUNC_ADD:
+						if_opname = "ADD";
+					FUNC_SUB:
+						if_opname = "SUB";
+					FUNC_AND:
+						if_opname = "AND";
+					FUNC_OR:
+						if_opname = "OR";
+					FUNC_XOR:
+						if_opname = "XOR";
+					FUNC_NOR:
+						if_opname = "NOR";
+					FUNC_SLT:
+						if_opname = "SLT";
+					FUNC_SLL:
+						if_opname = "SLL";
+					FUNC_SRL:
+						if_opname = "SRL";
+					FUNC_SRA:
+						if_opname = "SRA";
+					FUNC_JR:
+						if_opname = "JR";
+					default:
+						if_opname = "BAD!";
+				endcase
+			end
+			default:
+				if_opname = "BAD!";
+		endcase
+	end
+    
+    ee457_mem #(.INIT_FILE("progmem_p1.txt")) imem 
+            (	.addr(imem_addr[9:2]), 
+							.memread(imemread), 
+							.memwrite(imemwrite), 
+							.wdata(imem_wdata[31:0]),
+							.clk(clk), 
+							.rdata(imem_rdata[31:0])
+						);
+
+    ee457_mem #(.INIT_FILE("datamem.txt")) dmem 
+            (	.addr(dmem_addr[9:2]), 
+							.memread(dmemread), 
+							.memwrite(dmemwrite), 
+							.wdata(dmem_wdata[31:0]),
+							.clk(clk), 
+							.rdata(dmem_rdata[31:0])
+						);
+
+	task clk_edge();
+	begin
+	#5 clk=1;
+	#5 clk=0;
+	end
+	endtask
+
+	integer cc=0;
+ 
+	always@(posedge clk)
+	begin
+		cc= cc+1;
+		// Caution the instruction being fetched may be due to a stall or 
+		//  instructions that will be flushed
+		$display("cc = %d. Opcode coming out of IMEM: %s",cc, if_opname);
+	end
+	
+	task prog1chk();
+	begin
+		clk_edge();
+		clk_edge();
+		clk_edge();
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'h00000084 || 
+			 uut.regfile.wa != 5'd9 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: ADDI $9,$0,0x0084 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'd0 || 
+			 uut.regfile.wa != 5'd8 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: XOR $8,$0,$0 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'hffffffff || 
+			 uut.regfile.wa != 5'd8 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: NOR $8,$0,$0 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'h0x12345678 || 
+			 uut.regfile.wa != 5'd4 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: LW $4,-4($9) Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'hfffffffe || 
+			 uut.regfile.wa != 5'd5 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: LW $5,0($9) Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if (uut.regfile.wen !== 1'b0)
+		begin
+			$display("Error cc=%d: Bubble not found between LW and dependent instruction.", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'h0x12345676 || 
+			 uut.regfile.wa != 5'd17 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: ADD $17,$4,$5 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'h0x1234567a || 
+			 uut.regfile.wa != 5'd18 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: SUB $18,$4,$5 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'd1 || 
+			 uut.regfile.wa != 5'd16 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: SLT $16,$18,$17 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'h0x12345678 || 
+			 uut.regfile.wa != 5'd16 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: AND $16,$4,$5 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'd1 || 
+			 uut.regfile.wa != 5'd19 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: SLT $19,$8,$0 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if (uut.pc !== 32'h00000038)
+		begin
+			$display("Error cc=%d: BEQ $19,$0,L2 (0x3c) Branch error (check occurs when branch is in WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'hfffffffe || 
+			 uut.regfile.wa != 5'd16 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: OR  $16,$4,$5 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if (dmem.mem[35] !== 32'hfffffffe)
+		begin
+			$display("Error cc=%d: SW $16,8($9) Did not store the correct data to memory.", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'd0 || 
+			 uut.regfile.wa != 5'd8 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: ADDI $8, $8, 1 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if (uut.pc !== 32'h0000000c)
+		begin
+			$display("Error cc=%d: BEQ $0,$0, L1 (0x0c) Branch error (check occurs when branch is in WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if (uut.regfile.wen !== 1'b0)
+		begin
+			$display("Error cc=%d: First Bubble not found after taken branch.", cc);
+			$stop;
+		end
+		clk_edge();
+		if (uut.regfile.wen !== 1'b0)
+		begin
+			$display("Error cc=%d: Second Bubble not found after taken branch.", cc);
+			$stop;
+		end
+		clk_edge();
+		if (uut.regfile.wen !== 1'b0)
+		begin
+			$display("Error cc=%d: Third Bubble not found after taken branch.", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'h0x12345678 || 
+			 uut.regfile.wa != 5'd4 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: LW $4,-4($9) Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'hfffffffe || 
+			 uut.regfile.wa != 5'd5 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: LW $5,0($9) Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if (uut.regfile.wen !== 1'b0)
+		begin
+			$display("Error cc=%d: Bubble not found between LW and dependent instruction.", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'h0x12345676 || 
+			 uut.regfile.wa != 5'd17 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: ADD $17,$4,$5 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'h0x1234567a || 
+			 uut.regfile.wa != 5'd18 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: SUB $18,$4,$5 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'd1 || 
+			 uut.regfile.wa != 5'd16 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: SLT $16,$18,$17 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'h0x12345678 || 
+			 uut.regfile.wa != 5'd16 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: AND $16,$4,$5 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if ( uut.regfile.wdata !== 32'd0 || 
+			 uut.regfile.wa != 5'd19 || 
+			 uut.regfile.wen !== 1'b1  )
+		begin
+			$display("Error cc=%d: SLT $19,$8,$0 Did not write correct value to regfile (WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if (uut.pc !== 32'h0000003c)
+		begin
+			$display("Error cc=%d: BEQ $19,$0,L2 (0x3c) Branch error (check occurs when branch is in WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if (uut.regfile.wen !== 1'b0)
+		begin
+			$display("Error cc=%d: First Bubble not found after taken branch.", cc);
+			$stop;
+		end
+		clk_edge();
+		if (uut.regfile.wen !== 1'b0)
+		begin
+			$display("Error cc=%d: Second Bubble not found after taken branch.", cc);
+			$stop;
+		end
+		clk_edge();
+		if (uut.regfile.wen !== 1'b0)
+		begin
+			$display("Error cc=%d: Third Bubble not found after taken branch.", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if (uut.pc !== 32'h0000003c)
+		begin
+			$display("Error cc=%d: BEQ $0,$0, L2 (0x3c) Branch error (check occurs when branch is in WB stage).", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if (uut.regfile.wen !== 1'b0)
+		begin
+			$display("Error cc=%d: First Bubble not found after taken branch.", cc);
+			$stop;
+		end
+		clk_edge();
+		if (uut.regfile.wen !== 1'b0)
+		begin
+			$display("Error cc=%d: Second Bubble not found after taken branch.", cc);
+			$stop;
+		end
+		clk_edge();
+		if (uut.regfile.wen !== 1'b0)
+		begin
+			$display("Error cc=%d: Third Bubble not found after taken branch.", cc);
+			$stop;
+		end
+
+		clk_edge();
+		if (uut.pc !== 32'h0000003c)
+		begin
+			$display("Error cc=%d: BEQ $0,$0, L2 (0x3c) Branch error (check occurs when branch is in WB stage).", cc);
+			$stop;
+		end
+        
+		$display ("======== Simulation Complete, Congratulations ========") ;
+		$display ("======== Prog1 test Passed!!!! ============") ;
+		$writememh("dbg_final_regfile.txt", uut.regfile.regarray);
+		$writememh("dbg_final_dmem.txt", dmem.mem);
+		$stop();
+
+		// Should stop at 560 ns in current simulation
+	end
+	endtask
+
+	initial begin
+		clk = 0;
+		rst = 1;
+		clk_edge(); // Reseting the Pipeline and CPU
+		clk_edge(); // "clk_edge();" Provides one single clk edge 
+		clk_edge();
+		rst = 0;	//Disabled the reset and starting to execute the program described by progmem_2021_part1_assemb.txt
+		prog1chk();
+	end
+      
+endmodule
+
+
+
