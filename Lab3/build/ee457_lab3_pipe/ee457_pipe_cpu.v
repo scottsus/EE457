@@ -45,7 +45,7 @@ module ee457_pipe_cpu(
     // Clock and reset
     input 				clk,
     input 				rst
-   );
+    );
 
 
     // Use these for opcode decoding as necessary
@@ -70,11 +70,11 @@ module ee457_pipe_cpu(
     localparam FUNC_JR  = 6'b001000;
 
     // ALU signals
-    reg [31:0]      ina_fu;
+    reg  [31:0]     ina_fu;
     wire [31:0]     ina;
-    reg [31:0]      inb_fu;
+    reg  [31:0]     inb_fu;
     wire [31:0]     inb;
-    reg [5:0]       alu_func;
+    reg  [5:0]      alu_func;
     wire [31:0]     alu_res;
     wire            sov;
     wire            uov;
@@ -131,11 +131,11 @@ module ee457_pipe_cpu(
     reg [4:0]       id_ex_rt;
     reg [4:0]       id_ex_rd;
     reg [25:0]      id_ex_jump_addr;
+    reg             id_ex_branch;
+    reg             id_ex_jump;
     reg             id_ex_regdst;
     reg             id_ex_alusrc;
     reg [1:0]       id_ex_aluop;
-    reg             id_ex_branch;
-    reg             id_ex_jump;
     reg             id_ex_memread;
     reg             id_ex_memwrite;
     reg             id_ex_regwrite;
@@ -153,6 +153,7 @@ module ee457_pipe_cpu(
     reg [4:0]       ex_mem_write_reg_id;
     reg             ex_mem_branch;
     reg             ex_mem_jump;
+    reg             ex_mem_regdst;
     reg             ex_mem_memread;
     reg             ex_mem_memwrite;
     reg             ex_mem_regwrite;
@@ -166,7 +167,21 @@ module ee457_pipe_cpu(
 
     // TODO: Define MEM/WB pipeline signals
     //  We suggest names with the prefix mem_wb_<signal>
-    
+    // MEM/WB pipeline signals
+    reg [31:0]      mem_wb_alu_result;
+    reg [31:0]      mem_wb_dmem_rdata;
+    reg [4:0]       mem_wb_write_reg_id;
+    reg             mem_wb_regdst;
+    reg             mem_wb_regwrite;
+    reg             mem_wb_memtoreg;
+
+    // WB stage signals
+    reg [31:0]      wb_alu_result;
+    reg [31:0]      wb_dmem_rdata;
+    reg             wb_regwrite;
+    reg [4:0]       wb_write_reg_id;
+    reg             memtoreg;  
+    reg             regdst;
 
     //=================================
     //  Fetch Stage
@@ -174,11 +189,11 @@ module ee457_pipe_cpu(
     // PC process
     always @(posedge clk)
     begin
-        if(rst == 1)
+        if (rst == 1)
             pc <= 32'b0;
-        else if( branch_taken == 1)
+        else if (branch_taken == 1)
             pc <= ex_mem_next_pc;
-        else if(pcwrite == 1)
+        else if (pcwrite == 1)
             pc <= if_next_pc;
     end
     assign if_next_pc = pc + 32'd4;
@@ -192,12 +207,12 @@ module ee457_pipe_cpu(
     always @(posedge clk)
     begin
         instruct_flushed <= branch_taken || rst;
-        if(branch_taken || rst)
+        if (branch_taken || rst)
             begin
             if_id_next_pc <= 32'b0;
             if_id_instruc <= 32'b0;
             end
-        else if(branch_taken == 0 && irwrite == 1)
+        else if (branch_taken == 0 && irwrite == 1)
             begin
             if_id_next_pc <= if_next_pc;
             if_id_instruc <= imem_rdata;
@@ -222,12 +237,12 @@ module ee457_pipe_cpu(
     assign reg_ra = rs;
     assign reg_rb = rt;
     
-    assign imm_sext = { {16{imm[15]}},imm};
+    assign imm_sext = {{16{imm[15]}}, imm};
 
     // Control Unit (state machine)
     ee457_scpu_cu ctrl_unit(
-        .op(if_id_instruc[31:26]),
-        .func(if_id_instruc[5:0]),
+        .op(opcode),
+        .func(func),
         .branch(cu_branch),
         .jmp(cu_jump),
         .mr(cu_dmemread),
@@ -241,13 +256,13 @@ module ee457_pipe_cpu(
 
     // TODO: Connect the signals to the HDU
     ee457_hdu hdu(
-        .ex_lw( /* map appropriate signal */ ),
-        .ex_wa( /* map appropriate signal */ ),
-        .id_ra( /* map appropriate signal */ ),
-        .id_rb( /* map appropriate signal */ ),
-        .stall( /* map appropriate signal */ ),
-        .irwrite( irwrite ),
-        .pcwrite( pcwrite )
+        .ex_lw(ex_mem_memread),
+        .ex_wa(ex_mem_write_reg_id),
+        .id_ra(id_ex_rs),
+        .id_rb(id_ex_rt),
+        .stall(hdu_stall),
+        .irwrite(irwrite),
+        .pcwrite(pcwrite)
     );
 
     // TODO: Map the appropriate signals to wa, wdata, and wen
@@ -255,30 +270,32 @@ module ee457_pipe_cpu(
     ee457_regfile_2r1w regfile (
         .ra(reg_ra),
         .rb(reg_rb),
-        .wa(/* map appropriate signal */),
-        .wdata(/* map appropriate signal */),
-        .wen(/* map appropriate signal */),
+        .wa(reg_wa),
+        .wdata(reg_wdata),
+        .wen(regwrite),
         .clk(clk),
         .rst(rst),
+        .memtoreg(memtoreg),
         .radata(reg_radata),
         .rbdata(reg_rbdata)
     );
 
     // TODO: assign the signals you connect to the regfile above
     //   to the primary outputs (for debugging purposes)
-    assign reg_wa = /* Add appropriate signal */;
-    assign regwrite = /* Add appropriate signal */;
-    assign reg_wdata = /* Add appropriate signal */;
+    assign reg_wa = mem_wb_write_reg_id;
+    assign regwrite = ex_mem_regwrite || mem_wb_regwrite;
+    assign reg_wdata = memtoreg ? wb_dmem_rdata : mem_wb_alu_result;
+    // assign blah = memtoreg ? wb_dmem_rdata : mem_wb_alu_result;
 
     // TODO: Use hdu_stall and other signals to produce the 
     //       signal which we call `insert_bubble` which we
     //       use in the id_ex pipe to insert a bubble.
-    assign insert_bubble = /* Add appropriate logic */ ;	
+    assign insert_bubble = hdu_stall || instruct_flushed;	
 
     // ID/EX Stage Register process
     always @(posedge clk)
     begin
-        if(rst == 1 || insert_bubble == 1)
+        if (rst == 1 || insert_bubble == 1)
             begin
             id_ex_next_pc <= 32'bX;
             id_ex_reg_radata <= 32'bX;
@@ -328,18 +345,18 @@ module ee457_pipe_cpu(
     //=================================
     //  Execute Stage
     //=================================
-    assign imm_sext_sh2 = {id_ex_imm_sext[29:0],2'b0};
+    assign imm_sext_sh2 = {id_ex_imm_sext[29:0], 2'b0};
     assign branch_target_pc = id_ex_next_pc + imm_sext_sh2;
-    assign jump_target_pc = {id_ex_next_pc[31:28],id_ex_jump_addr,2'b00};
+    assign jump_target_pc = {id_ex_next_pc[31:28], id_ex_jump_addr, 2'b00};
 
     // We still won't branch until MEM stage but we can mux the
     // appropriate PC now to avoid ex/mem pipeline registers for
     // each different PC target
     always @*
     begin
-    if(id_ex_branch )
+    if (id_ex_branch)
       ex_mem_next_pc_d = branch_target_pc;
-    else if(id_ex_jump)
+    else if (id_ex_jump)
       ex_mem_next_pc_d = jump_target_pc;
     else
       ex_mem_next_pc_d = id_ex_next_pc;
@@ -347,34 +364,49 @@ module ee457_pipe_cpu(
 
     // TODO: Connect the signals to the forwarding unit
     ee457_FU fu	(
-        .mem_regwrite( /* Map me to the appropriate signal */ ),
-        .mem_wa( /* Map me to the appropriate signal */ ),
-        .wb_regwrite( /* Map me to the appropriate signal */ ),
-        .wb_wa( /* Map me to the appropriate signal */ ),
-        .ex_ra( /* Map me to the appropriate signal */ ),
-        .ex_rb( /* Map me to the appropriate signal */ ),
-        .alu_sela(  alu_sela ),
-        .alu_selb(  alu_selb )
+        .mem_regwrite(mem_wb_regwrite),
+        .mem_wa(mem_wb_write_reg_id),
+        .wb_regwrite(wb_regwrite),
+        .wb_wa(wb_write_reg_id),
+        .ex_ra(id_ex_rs),
+        .ex_rb(id_ex_rt),
+        .alu_sela(alu_sela),
+        .alu_selb(alu_selb)
+        
+        // .mem_regwrite(ex_mem_regwrite),
+        // .mem_wa(ex_mem_write_reg_id),
+        // .wb_regwrite(mem_wb_regwrite),
+        // .wb_wa(mem_wb_write_reg_id),
+        // .ex_ra(reg_ra),
+        // .ex_rb(reg_rb),
+        // .alu_sela(alu_sela),
+        // .alu_selb(alu_selb)
     );
 
     // Forwarding muxes - Should produce output signals: ina_fu, inb_fu
     always @*
     begin
         // TODO: Describe the forwarding muxes
-        if(alu_sela == 2'b01)
-            ina_fu = /* appropriate signal */;
-        else if(alu_sela ==	2'b10)
-            ina_fu = /* appropriate signal */;		
+        if (alu_sela == 2'b01)
+            ina_fu = ex_mem_alu_result;
+        else if (alu_sela == 2'b10)
+            ina_fu = wb_alu_result;		
         else
-            ina_fu = /* appropriate signal */;
+            ina_fu = id_ex_reg_radata;
 
+        // $display("ex_mem_alu_result: %d", ex_mem_alu_result);
+        // $display("memtoreg: %d, reg_wdata: %d", memtoreg, wb_alu_result);
+        // $display("id_ex_reg_radata: %d", id_ex_reg_radata);
 
-        if(alu_selb == 2'b01)
-            inb_fu = /* appropriate signal */;
-        else if(alu_selb ==	2'b10)
-            inb_fu = /* appropriate signal */;		
+        if (alu_selb == 2'b01)
+            inb_fu = ex_mem_alu_result;
+        else if (alu_selb == 2'b10)
+            inb_fu = wb_alu_result;		
         else
-            inb_fu = /* appropriate signal */;
+            inb_fu = id_ex_reg_rbdata;
+
+        // $display("SelA: %d, ina_fu: %d", alu_sela, ina_fu);
+        // $display("SelB: %d, inb_fu: %d", alu_selb, id_ex_alusrc ? id_ex_imm_sext : inb_fu);
     end
         
     // ALU Control
@@ -386,7 +418,6 @@ module ee457_pipe_cpu(
       alu_func = FUNC_SUB;
     else
       alu_func = id_ex_func;
-
     end
 
     assign ina = ina_fu;
@@ -411,22 +442,23 @@ module ee457_pipe_cpu(
     always @(posedge clk)
     begin
         // TODO:  Update the next line
-        if(rst == 1 || /* Add check to flush instruction */ )
+        if (rst == 1 || insert_bubble)
             begin
-            ex_mem_opcode <= 6'b0;
-            ex_mem_branch <= 1'b0;
-            ex_mem_jump <= 1'b0;
-            ex_mem_memread <= 1'b0;
-            ex_mem_memwrite <= 1'b0;
-            ex_mem_regwrite <= 1'b0;
             ex_mem_next_pc <= 32'bX;
+            ex_mem_opcode <= 6'b0;
             ex_mem_alu_result <= 32'bX;
             ex_mem_alu_zero <= 1'b0;
             ex_mem_write_reg_id <= 5'b0;
+            ex_mem_branch <= 1'b0;
+            ex_mem_jump <= 1'b0;
+            ex_mem_regdst <= 1'b0;
+            ex_mem_memread <= 1'b0;
+            ex_mem_memwrite <= 1'b0;
+            ex_mem_regwrite <= 1'b0;
             ex_mem_memtoreg <= 1'b0;
             // TODO:  One signal has been forgotten add it
             // here and assign it in the `else` section below
-
+            ex_mem_reg_rbdata <= 32'bX;
             end
         else
             begin
@@ -437,12 +469,13 @@ module ee457_pipe_cpu(
             ex_mem_write_reg_id <= ex_mem_write_reg_id_d;
             ex_mem_branch <= id_ex_branch;
             ex_mem_jump <= id_ex_jump;
+            ex_mem_regdst <= id_ex_regdst;
             ex_mem_memread <= id_ex_memread;
             ex_mem_memwrite <= id_ex_memwrite;
             ex_mem_regwrite <= id_ex_regwrite;
             ex_mem_memtoreg <= id_ex_memtoreg;
             // TODO:  Add the forgotten signal assignment
-
+            ex_mem_reg_rbdata <= id_ex_reg_rbdata;
             end
     end
 
@@ -452,17 +485,25 @@ module ee457_pipe_cpu(
 
     // TODO: Produce the logic for branch_taken
     assign branch_taken = 
-        /* Add appropriate signal */ || 
+        cu_branch || 
         (ex_mem_branch && 
-            (ex_mem_opcode == OP_BEQ && /* Add appropriate check */ || 
-                ex_mem_opcode == OP_BNE && /* Add appropriate check */));
+            (ex_mem_opcode == OP_BEQ && ex_mem_alu_zero || 
+                ex_mem_opcode == OP_BNE && ~ex_mem_alu_zero));
 
     // TODO: Determine what signals to output to the data memory
-    assign dmem_addr = /* appropriate signal */ ;
-    assign dmem_wdata = /* appropriate signal */ ;
-    assign dmemread = /* appropriate signal */ ;
-    assign dmemwrite = /* appropriate signal */ ;
+    assign dmem_addr = ex_mem_alu_result;
+    assign dmem_wdata = reg_rbdata;
+    assign dmemread = ex_mem_memread;
+    assign dmemwrite = ex_mem_memwrite;
 
+    ee457_mem mem (
+        .addr(dmem_addr[9:2]),
+        .wdata(dmem_wdata),
+        .memread(dmemread),
+        .memwrite(dmemwrite),
+        .clk(clk),
+        .rdata(dmem_rdata)
+        );
 
     // TODO: Add the MEM/WB pipeline register.  
     //       Consider what signals need to be registered 
@@ -471,15 +512,28 @@ module ee457_pipe_cpu(
     // MEM/WB Stage Register process
     always @(posedge clk)
     begin
-        if(rst == 1)
+        if (rst == 1)
             begin
             // TODO: add appropriate signal initialization
-
+            mem_wb_alu_result <= 32'bX;
+            mem_wb_write_reg_id <= 5'b0;
+            mem_wb_regdst <= 1'b0;
+            mem_wb_regwrite <= 1'b0;
+            mem_wb_memtoreg <= 1'b0;
             end
         else
             begin
             // TODO: add appropriate signal updates
+            mem_wb_alu_result <= ex_mem_alu_result;
+            mem_wb_dmem_rdata <= dmem_rdata;
+            mem_wb_write_reg_id <= ex_mem_write_reg_id;
+            mem_wb_regdst <= ex_mem_regdst;
+            mem_wb_regwrite <= ex_mem_regwrite;
+            mem_wb_memtoreg <= ex_mem_memtoreg;
 
+            // $display("mem_wb_alu_result: %d", ex_mem_alu_result);
+            // $display("dmem_rdata: %d", dmem_rdata);
+            // $display("writeregId: %d", mem_wb_write_reg_id);
             end
     end
     
@@ -487,8 +541,16 @@ module ee457_pipe_cpu(
     //  WB Stage
     //=================================
 
-    // TODO: implement the mem_to_reg mux using the appropriate signals
-      
+    // TODO: implement the memtoreg mux using the appropriate signals
+    always @(posedge clk)
+    begin
+        wb_alu_result <= mem_wb_alu_result;
+        wb_dmem_rdata <= dmem_rdata;
+        wb_regwrite <= mem_wb_regwrite;
+        wb_write_reg_id <= mem_wb_write_reg_id;
+        memtoreg <= ex_mem_memtoreg;
+        regdst <= mem_wb_regdst;
+    end      
 
 endmodule
 

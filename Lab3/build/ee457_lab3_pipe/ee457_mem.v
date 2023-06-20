@@ -9,35 +9,39 @@
  
  module ee457_mem 
  (
-	input			[7:0]		addr,
-	input	 		[31:0]  	wdata,
-	input       	   	memread,
-	input       	   	memwrite,
-	input 					clk,
-	output reg	[31:0] 	rdata
+	input [7:0]	  		addr,
+	input [31:0]  		wdata,
+	input         		memread,
+	input         		memwrite,
+	input 		  		clk,
+	output reg [31:0] 	rdata
 	);
-	parameter INIT_FILE = "mem_file.txt";
+	parameter INIT_FILE = "datamem.txt";
 	parameter ADDR_SIZE = 8;
-   parameter DATA_SIZE = 32;
+   	parameter DATA_SIZE = 32;
 	
 	localparam ARRAY_DEPTH = 1 << ADDR_SIZE;
 	
-	reg [DATA_SIZE-1:0] 	mem [0:ARRAY_DEPTH-1];
+	reg [DATA_SIZE-1 : 0] mem [0 : ARRAY_DEPTH-1];
 	
 	initial
 		$readmemh(INIT_FILE, mem);
-		
+	
 	always @*
 	begin
-		if(memread)
+		if (memread) begin
 			rdata <= mem[addr];
-		else
+			// $display("Read %d from %d", mem[addr], addr);
+		end
+		else begin
 			rdata <= 32'bzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz;
+			// $display("No mem read");
+		end
 	end
 	
 	always @(posedge clk)
 	begin
-		if(memwrite)
+		if (memwrite)
 			mem[addr] <= wdata;
 	end
 

@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 module ee457_scpu(
     // I/O interface to memory
-    output 		[31:0] 	imem_addr,
+    output 	    [31:0] 	imem_addr,
     output 		[31:0] 	imem_wdata,
     output 				imemread,
     output 				imemwrite,
@@ -45,7 +45,7 @@ module ee457_scpu(
     // Clock and reset
     input 				clk,
     input 				rst
-   );
+    );
 
 
     // Use these for opcode decoding
@@ -72,18 +72,18 @@ module ee457_scpu(
     // ALU signals
     wire [31:0]		ina;
     wire [31:0]		inb;
-    reg [5:0]		alu_func;
+    reg  [5:0]		alu_func;
     wire [31:0]		alu_res;
     wire 			sov;
-    wire    uov;
-    wire				zero;
+    wire            uov;
+    wire			zero;
     
     // Control Signals
-    wire 				jump;
-    wire 				branch;
-    wire 				memtoreg;
-    wire 				regdst;
-    wire 				alusrc;
+    wire 			jump;
+    wire 			branch;
+    wire 			memtoreg;
+    wire 			regdst;
+    wire 			alusrc;
     wire [1:0]		aluop;
 
     wire [5:0]		opcode;
@@ -108,7 +108,7 @@ module ee457_scpu(
     // PC process
     always @(posedge clk)
     begin
-        if(rst == 1)
+        if (rst == 1)
             pc <= 32'b0;
         else 
             pc <= pc_d;
@@ -138,17 +138,17 @@ module ee457_scpu(
 
     // Control Unit (state machine)
     ee457_scpu_cu ctrl_unit(
-    .op(opcode),
-    .func(func),
-    .branch(branch),
-    .jmp(jump),
-    .mr(dmemread),
-    .mw(dmemwrite),
-    .regw(regwrite),
-    .mtor(memtoreg),
-    .rdst(regdst),
-    .alusrc(alusrc),
-    .aluop(aluop)
+        .op(opcode),
+        .func(func),
+        .branch(branch),
+        .jmp(jump),
+        .mr(dmemread),
+        .mw(dmemwrite),
+        .regw(regwrite),
+        .mtor(memtoreg),
+        .rdst(regdst),
+        .alusrc(alusrc),
+        .aluop(aluop)
     );
 
     
@@ -200,9 +200,9 @@ module ee457_scpu(
 
     always @*
     begin
-        if(opcode == OP_BEQ && zero == 1 || opcode == OP_BNE && zero == 0)
+        if (opcode == OP_BEQ && zero == 1 || opcode == OP_BNE && zero == 0)
             pc_d = branch_target_pc;
-        else if(jump == 1)
+        else if (jump == 1)
             pc_d = jump_target_pc;
         else
             pc_d = next_pc;

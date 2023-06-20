@@ -12,37 +12,7 @@ QuestaSim-64 vlog 10.4c Compiler 2015.07 Jul 20 2015
 Top level modules:
 	ee457_regfile_2r1w
 
-} {} {}} C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v {0 {vlog -work work -vopt -stats=none C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v
-QuestaSim-64 vlog 10.4c Compiler 2015.07 Jul 20 2015
--- Compiling module ee457_pipe_cpu
-** Error: (vlog-13069) C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v(269): near ";": syntax error, unexpected ';'.
-
-** Error: (vlog-13069) C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v(270): near ";": syntax error, unexpected ';'.
-
-** Error: (vlog-13069) C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v(271): near ";": syntax error, unexpected ';'.
-
-** Error: (vlog-13069) C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v(276): near ";": syntax error, unexpected ';'.
-
-** Error: (vlog-13069) C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v(365): near ";": syntax error, unexpected ';'.
-
-** Error: (vlog-13069) C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v(367): near ";": syntax error, unexpected ';'.
-
-** Error: (vlog-13069) C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v(369): near ";": syntax error, unexpected ';'.
-
-** Error: (vlog-13069) C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v(373): near ";": syntax error, unexpected ';'.
-
-** Error: (vlog-13069) C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v(375): near ";": syntax error, unexpected ';'.
-
-** Error: (vlog-13069) C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v(377): near ";": syntax error, unexpected ';'.
-
-** Error: (vlog-13069) C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v(414): near ")": syntax error, unexpected ')'.
-
-** Error: (vlog-13069) C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v(431): near "else": syntax error, unexpected else.
-
-** Error: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v(434): (vlog-13205) Syntax error found in the scope following 'ex_mem_opcode'. Is there a missing '::'?
-
-
-} {4.0 5.0 6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 15.0 16.0 17.0 18.0 19.0 20.0 21.0 22.0 23.0 24.0 25.0 26.0 27.0 28.0 29.0} {}} C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_hdu.v {1 {vlog -work work -vopt -stats=none C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_hdu.v
+} {} {}} C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_hdu.v {1 {vlog -work work -vopt -stats=none C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_hdu.v
 QuestaSim-64 vlog 10.4c Compiler 2015.07 Jul 20 2015
 -- Compiling module ee457_hdu
 
@@ -56,35 +26,42 @@ QuestaSim-64 vlog 10.4c Compiler 2015.07 Jul 20 2015
 Top level modules:
 	ee457_FU
 
-} {} {}} C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v {2 {vlog -work work -vopt -stats=none C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v
-QuestaSim-64 vlog 10.4c Compiler 2015.07 Jul 20 2015
--- Compiling module ee457_pipe_cpu_tb
-** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(231): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
-
-** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(256): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
-
-** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(265): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
-
-** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(283): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
-
-** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(359): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
-
-** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(384): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
-
-** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(393): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
-
-** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(411): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
-
-
-Top level modules:
-	ee457_pipe_cpu_tb
-
 } {} {}} C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_alu.v {1 {vlog -work work -vopt -stats=none C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_alu.v
 QuestaSim-64 vlog 10.4c Compiler 2015.07 Jul 20 2015
 -- Compiling module ee457_alu
 
 Top level modules:
 	ee457_alu
+
+} {} {}} C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v {2 {vlog -work work -vopt -stats=none C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v
+QuestaSim-64 vlog 10.4c Compiler 2015.07 Jul 20 2015
+-- Compiling module ee457_pipe_cpu_tb
+** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(234): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(259): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(268): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(286): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(362): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(387): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(396): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+** Warning: C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v(414): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+
+Top level modules:
+	ee457_pipe_cpu_tb
+
+} {} {}} C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_scpu_cu.v {1 {vlog -work work -vopt -stats=none C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_scpu_cu.v
+QuestaSim-64 vlog 10.4c Compiler 2015.07 Jul 20 2015
+-- Compiling module ee457_scpu_cu
+
+Top level modules:
+	ee457_scpu_cu
 
 } {} {}} C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_mem.v {1 {vlog -work work -vopt -stats=none C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_mem.v
 QuestaSim-64 vlog 10.4c Compiler 2015.07 Jul 20 2015

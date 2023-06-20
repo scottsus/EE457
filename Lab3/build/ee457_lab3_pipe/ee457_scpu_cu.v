@@ -8,22 +8,22 @@
  */
  
  module ee457_scpu_cu(
-    // Machine instruction opcodes
-  input  		[5:0]  	op,
-  input  		[5:0]  	func,
+  // Machine instruction opcodes
+  input [5:0] op,
+  input [5:0] func,
 
   // Control signals to be generated
-  output reg		     branch,
-  output reg 					     jmp,
-  output reg 					     mr,
-  output reg 					     mw,
-  output reg 					     regw,
-  output reg 					     mtor,
-  output reg 					     rdst,
-  output reg 					     alusrc,
-  output reg [1:0]     aluop
+  output reg	   branch,
+  output reg 	   jmp,
+  output reg 	   mr,
+  output reg 	   mw,
+  output reg 	   regw,
+  output reg 	   mtor,
+  output reg 	   rdst,
+  output reg 	   alusrc,
+  output reg [1:0] aluop
      
-   );
+  );
 
     // Use these for opcode decoding
     localparam OP_LW    = 6'b100011;
@@ -50,52 +50,52 @@
     begin
     branch = 1'b0;
     jmp = 1'b0;
-    mr = 1'b0;
-    mw = 1'b0;
-    regw = 1'b0;
-    mtor = 1'b0;
     rdst = 1'b0;
     alusrc = 1'b0;
     aluop = 2'b00;
-    if(op == OP_RTYPE)
+    regw = 1'b0;
+    mr = 1'b0;
+    mw = 1'b0;
+    mtor = 1'b0;
+    if (op == OP_RTYPE)
         begin
-        regw = 1'b1;
-        aluop = 2'b10;
-        alusrc = 1'b0;
-        mtor = 1'b0;
         rdst = 1'b1;
-        end
-    else if(op == OP_LW)
-        begin
+        alusrc = 1'b0;
+        aluop = 2'b10;
         regw = 1'b1;
-        aluop = 2'b00;
+        mtor = 1'b0;
+        end
+    else if (op == OP_LW)
+        begin
+        rdst = 1'b0;
         alusrc = 1'b1;
+        aluop = 2'b00;
+        regw = 1'b1;
         mr = 1'b1;
         mtor = 1'b1;
-        rdst = 1'b0;        
         end
-    else if(op == OP_SW)
+    else if (op == OP_SW)
         begin
-        aluop = 2'b00;
         alusrc = 1'b1;
-        mw = 1'b1;        
+        aluop = 2'b00;
+        mw = 1'b1;      
         end
-    else if(op == OP_BEQ || op == OP_BNE)
+    else if (op == OP_BEQ || op == OP_BNE)
         begin
-        aluop = 2'b01;
+        branch = 1'b1;
         alusrc = 1'b0;
-        branch = 1'b1;                
+        aluop = 2'b01;                
         end
-    else if(op == OP_JMP)
+    else if (op == OP_JMP)
         begin
         jmp = 1'b1;                        
         end
-    else if(op == OP_ADDI)
+    else if (op == OP_ADDI)
         begin
-        aluop = 2'b00;
-        alusrc = 1'b1;
-        regw = 1'b1;
         rdst = 1'b0;
+        alusrc = 1'b1;
+        aluop = 2'b10;
+        regw = 1'b1;
         mtor = 1'b0;
         end
 

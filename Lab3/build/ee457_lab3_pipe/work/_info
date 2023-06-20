@@ -9,163 +9,175 @@ z2
 cModel Technology
 dC:/Questasim_projects
 vee457_alu
-Z0 !s110 1686548256
+Z0 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+31
 !i10b 1
-!s100 7OIGz<U66G8ha[JnWfQ5I3
-IQ]:<`N2NiHBP^TILRho7L3
-Z1 VDg1SIo80bB@j0V0VzS_@n1
-Z2 dC:/Questasim_projects/Lab3/build/ee457_lab3_pipe
-Z3 w1686543601
+!s100 VO7Ebcj^7g:SK`o?e1VLH2
+I2F>;^LaOL4QVmfcmzG3WY0
+Z1 dC:/Questasim_projects/Lab3/build/ee457_lab3_pipe
+w1687234476
 8C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_alu.v
 FC:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_alu.v
 L0 34
-Z4 OL;L;10.4c;61
-r1
-!s85 0
-31
-Z5 !s108 1686548256.000000
+Z2 OL;L;10.4c;61
+Z3 !s108 1687236729.000000
 !s107 C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_alu.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_alu.v|
 !i113 0
-Z6 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z4 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 vee457_FU
 R0
+r1
+!s85 0
+31
 !i10b 1
-!s100 SQ=;8dZERZcQ`EgXD;9Uk1
-IdD^S?;B<=B]dW3=;KX5VV1
+!s100 WiDki[mIkGN<X7IRK[UQ10
+IViDdeV140XPP7bNP`Ci3=1
 R1
-R2
-R3
+w1687230752
 8C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_fwd.v
 FC:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_fwd.v
 L0 11
-R4
-r1
-!s85 0
-31
-R5
+R2
+R3
 !s107 C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_fwd.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_fwd.v|
 !i113 0
-R6
+R4
 nee457_@f@u
 vee457_hdu
-Z7 !s110 1686548257
-!i10b 1
-!s100 mjOm@WcX_Okmm<fef3I^F3
-IfiGi9^Od=YZ4<CLc;=F5K1
-R1
-R2
-R3
-8C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_hdu.v
-FC:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_hdu.v
-Z8 L0 12
-R4
+R0
 r1
 !s85 0
 31
-R5
+!i10b 1
+!s100 2eojdX`MQ6FaHao5A88Q?0
+IlP56F2QHBhSCQIN:2WXP:0
+R1
+w1687235313
+8C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_hdu.v
+FC:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_hdu.v
+Z5 L0 12
+R2
+R3
 !s107 C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_hdu.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_hdu.v|
 !i113 0
-R6
-vee457_mem
-R7
-!i10b 1
-!s100 bc;12j?Ri1BGL[_n@VY5O1
-If^LVA79VHKY]KV7nCYonD0
-R1
-R2
-R3
-8C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_mem.v
-FC:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_mem.v
-Z9 L0 10
 R4
+vee457_mem
+R0
 r1
 !s85 0
 31
-Z10 !s108 1686548257.000000
+!i10b 1
+!s100 <oEP_HSSeI@R9b@D<iMTI0
+I4DmnD`082SRM89WB40^cG3
+R1
+w1687232702
+8C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_mem.v
+FC:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_mem.v
+Z6 L0 10
+R2
+R3
 !s107 C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_mem.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_mem.v|
 !i113 0
-R6
-vee457_pipe_cpu_tb
-R7
+R4
+vee457_pipe_cpu
+R0
+r1
+!s85 0
+31
 !i10b 1
-!s100 >B=Y8QDo>>Vi8>2@47jHR3
-IY`<I^6kiNnEU4=3zOM[6T1
+!s100 ]9MBGAW=F727FI^T9FniG1
+I`Egg@lH:GLPa881XgMgOW3
 R1
+w1687236724
+8C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v
+FC:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v
+Z7 L0 21
 R2
 R3
+!s107 C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu.v|
+!i113 0
+R4
+vee457_pipe_cpu_tb
+R0
+r1
+!s85 0
+31
+!i10b 1
+!s100 m5:;gVjlkNBFnd6o7J9GQ0
+IXjhV=03_O<LH9Qo`H?IWR3
+R1
+w1687226473
 8C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v
 FC:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v
 L0 24
-R4
-r1
-!s85 0
-31
-R10
+R2
+R3
 !s107 C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_pipe_cpu_tb.v|
 !i113 0
-R6
-vee457_regfile_2r1w
-R7
-!i10b 1
-!s100 N=XDnAHnYJSn<9ULWhIPh1
-I6oH=^acYOHj_VY8Mh=f2K2
-R1
-R2
-R3
-8C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_regfile_2r1w.v
-FC:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_regfile_2r1w.v
-R8
 R4
+vee457_regfile_2r1w
+R0
 r1
 !s85 0
 31
-R10
+!i10b 1
+!s100 F69Xk2fg`kYk:PB<QNY9G3
+IeHz>KGKB`1d`D1SN=5IMK1
+R1
+w1687235660
+8C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_regfile_2r1w.v
+FC:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_regfile_2r1w.v
+R5
+R2
+R3
 !s107 C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_regfile_2r1w.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_regfile_2r1w.v|
 !i113 0
-R6
+R4
 vee457_scpu
-R7
+!s110 1687236730
 !i10b 1
 !s100 z68kK@HAEeXJVZE;`8eE`1
 IUO`Y3z`WG1L`dk``;MN_=1
+R0
 R1
-R2
-R3
+w1686959279
 8C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_scpu_sol.v
 FC:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_scpu_sol.v
-L0 21
-R4
+R7
+R2
 r1
 !s85 0
 31
-R10
+R3
 !s107 C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_scpu_sol.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_scpu_sol.v|
 !i113 0
-R6
-vee457_scpu_cu
-R7
-!i10b 1
-!s100 Blm7@?hELk@jMQN3?NZ^g0
-IPf;ahKfn=Q1`SQmKO_`@13
-R1
-R2
-w1686548189
-8C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_scpu_cu.v
-FC:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_scpu_cu.v
-R9
 R4
+vee457_scpu_cu
+R0
 r1
 !s85 0
 31
-R10
+!i10b 1
+!s100 >23RNV2kaENY1e>7E=JWS2
+Iz]zQ1<MHk[hLB`MBQcO:f0
+R1
+w1687225816
+8C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_scpu_cu.v
+FC:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_scpu_cu.v
+R6
+R2
+R3
 !s107 C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_scpu_cu.v|
 !s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Questasim_projects/Lab3/build/ee457_lab3_pipe/ee457_scpu_cu.v|
 !i113 0
-R6
+R4

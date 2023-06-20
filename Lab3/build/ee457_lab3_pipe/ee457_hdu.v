@@ -24,9 +24,9 @@
 	// Define local reg/wire signals here
 	always @ *					// OPTION 1
 	begin
-		
 		stall = 0;
-		if (ex_lw && (ex_wa == id_ra || ex_wa == id_rb) ) begin
+		if (ex_lw && (ex_wa == id_ra || ex_wa == id_rb)) begin
+			$display("lw, ex_wa: %d, id_ra: %d, id_rb: %d", ex_wa, id_ra, id_rb);
 		   stall = 1;
 		end
 	end

@@ -206,8 +206,8 @@ module ee457_pipe_cpu_tb;
 			 uut.regfile.wen !== 1'b1  )
 		begin
 			$display("Error cc=%d: ADDI $9,$0,0x0084 Did not write correct value to regfile (WB stage).", cc);
-			$display("Got -- wdata: %d, wa: %d, wen: %d", uut.regfile.wdata, uut.regfile.wa, uut.regfile.wen);
-			// $stop;
+			$display("Wdata: %d, wa: %d, wen: %d", uut.regfile.wdata, uut.regfile.wa, uut.regfile.wen);
+			$stop;
 		end
 
 		clk_edge();
@@ -216,8 +216,7 @@ module ee457_pipe_cpu_tb;
 			 uut.regfile.wen !== 1'b1  )
 		begin
 			$display("Error cc=%d: XOR $8,$0,$0 Did not write correct value to regfile (WB stage).", cc);
-			$display("Got -- wdata: %d, wa: %d, wen: %d", uut.regfile.wdata, uut.regfile.wa, uut.regfile.wen);
-			// $stop;
+			$stop;
 		end
 
 		clk_edge();
@@ -226,8 +225,7 @@ module ee457_pipe_cpu_tb;
 			 uut.regfile.wen !== 1'b1  )
 		begin
 			$display("Error cc=%d: NOR $8,$0,$0 Did not write correct value to regfile (WB stage).", cc);
-			$display("Got -- wdata: %d, wa: %d, wen: %d", uut.regfile.wdata, uut.regfile.wa, uut.regfile.wen);
-			// $stop;
+			$stop;
 		end
 
 		clk_edge();
@@ -236,7 +234,7 @@ module ee457_pipe_cpu_tb;
 			 uut.regfile.wen !== 1'b1  )
 		begin
 			$display("Error cc=%d: LW $4,-4($9) Did not write correct value to regfile (WB stage).", cc);
-			// $stop;
+			$stop;
 		end
 
 		clk_edge();
@@ -245,14 +243,14 @@ module ee457_pipe_cpu_tb;
 			 uut.regfile.wen !== 1'b1  )
 		begin
 			$display("Error cc=%d: LW $5,0($9) Did not write correct value to regfile (WB stage).", cc);
-			// $stop;
+			$stop;
 		end
 
 		clk_edge();
 		if (uut.regfile.wen !== 1'b0)
 		begin
 			$display("Error cc=%d: Bubble not found between LW and dependent instruction.", cc);
-			// $stop;
+			$stop;
 		end
 
 		clk_edge();
@@ -261,7 +259,7 @@ module ee457_pipe_cpu_tb;
 			 uut.regfile.wen !== 1'b1  )
 		begin
 			$display("Error cc=%d: ADD $17,$4,$5 Did not write correct value to regfile (WB stage).", cc);
-			// $stop;
+			$stop;
 		end
 
 		clk_edge();

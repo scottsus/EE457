@@ -32,23 +32,24 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module ee457_alu(
-    input [31:0] opa,
-    input [31:0] opb,
-    input [5:0] func,
-    output [31:0] res,
-    output reg uov,
-    output reg sov,
-	 output zero,
-    output reg cout
+    input  [31:0] 	opa,
+    input  [31:0] 	opb,
+    input  [5:0]  	func,
+    output [31:0] 	res,
+    output reg 		uov,
+    output reg 		sov,
+	output 			zero,
+    output reg 		cout
     );
 
-	wire [32:0] arith_res;
-	wire [31:0] slt_res;
-	reg [31:0] res_fb;
-	reg cin;
-	reg [31:0] opb_int;
-	wire slt_flag;
-	wire signed [31:0] opb_signed;
+	wire [32:0] 		arith_res;
+	wire [31:0] 		slt_res;
+	reg  [31:0] 		res_fb;
+	reg 				cin;
+	reg  [31:0]  		opb_int;
+	wire 				slt_flag;
+	wire signed [31:0] 	opb_signed;
+	
 	// Use these for decoding
 	localparam FUNC_ADD = 6'b100000;
 	localparam FUNC_SUB = 6'b100010;
@@ -65,6 +66,9 @@ module ee457_alu(
 	// Arithmetic operation pre-process
 	always @(opb, func)
 	begin
+		// $display("Func: %b", func);
+		// $display("opa: %d, opb: %d", opa, opb);
+
 		// Sub && SLT
 		if (func == FUNC_SUB || func == FUNC_SLT)
 			begin
@@ -103,7 +107,7 @@ module ee457_alu(
 		else if (func == FUNC_XOR)
 			res_fb <= opa ^ opb;
 		// NOR
-		else if (func == FUNC_NOR) 
+		else if (func == FUNC_NOR)
 			res_fb <= ~(opa | opb);
 		// Arithmetic result
 		else
@@ -125,6 +129,7 @@ module ee457_alu(
 			uov <= arith_res[32];
 			sov <= (opa[31] & opb_int[31] & ~arith_res[31]) | 
 					 (~opa[31] & ~opb_int[31] & arith_res[31]);
+			// $display("opa: %d + opb: %d = %d => %d", opa, ~opb, arith_res[31:0], (func == FUNC_SLT) ? slt_res : arith_res[31:0]);
 			end
 		// Sub 
 		else if (func == FUNC_SUB || func == FUNC_SLT)
@@ -134,6 +139,8 @@ module ee457_alu(
 			sov <= (opa[31] & opb_int[31] & ~arith_res[31]) | 
 					 (~opa[31] & ~opb_int[31] & arith_res[31]);
 			end		
+
+		
 	end
 	
 	// ============ TO BE COMPLETED BY YOU ==================

@@ -27,13 +27,19 @@
 	begin
 		alu_sela = 2'b00;
 		alu_selb = 2'b00;
-		if(mem_regwrite == 1 && (ex_ra == mem_wa) )
+		if (mem_regwrite == 1 && (ex_ra == mem_wa))
 			alu_sela = 2'b01;
-		else if(wb_regwrite == 1 && (ex_ra == wb_wa) )
+		else if (wb_regwrite == 1 && (ex_ra == wb_wa))
 			alu_sela = 2'b10;
-		if(mem_regwrite == 1 && (ex_rb == mem_wa) )
+		// $display("mem_wa: %d", mem_wa);
+		// $display("wb_wa: %d", wb_wa);
+		// $display("ex_ra: %d", ex_ra);
+		// $display("ex_rb: %d", ex_rb);
+		// $display("ALU_SELA: %d", alu_sela);
+		// $display("ALU_SELB: %d", alu_selb);
+		if (mem_regwrite == 1 && (ex_rb == mem_wa))
 			alu_selb = 2'b01;
-		else if(wb_regwrite == 1 && (ex_rb == wb_wa) )
+		else if (wb_regwrite == 1 && (ex_rb == wb_wa))
 			alu_selb = 2'b10;
 	end
 		
